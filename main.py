@@ -14,11 +14,11 @@ model = tf.keras.models.load_model('fishease_model.h5')
 # Define the class names (from the original training)
 CLASS_NAMES = [
     'Bacterial diseases - Aeromoniasis',
-    'Bacterial gill diseases',
+    'Bacterial gill disease',
     'Bacterial Red disease',
     'Fungal diseases Saprolegniasis',
     'Healthy Fish',
-    'Parasitic Disease',
+    'Parasitic diseases',
     'Viral diseases White tail disease'
 ]
 
