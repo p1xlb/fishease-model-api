@@ -16,11 +16,12 @@ Disease prediction handler
 - Predictions not as expected as initial prediction on model creation notebook (fishease.ipynb)
 
 ## How to use
-1. Install dependencies
+1. Put the model file in the same directory
+2. Install dependencies
 ```
 pip install --no-cache-dir -r requirements.txt
 ```
-2. Run the application
+3. Run the application
 ```
 uvicorn main:app --host 0.0.0.0 --port 3500
 ```
