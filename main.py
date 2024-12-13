@@ -12,7 +12,13 @@ import tempfile
 import os
 
 # Load the pre-trained model
-model = tf.keras.models.load_model('fishease_model.h5')
+model = tf.keras.models.load_model('fishease_model(1).h5', compile=False)
+
+model.compile(
+    optimizer='adam',
+    loss='categorical_crossentropy',
+    metrics=['accuracy']
+)
 
 # Define the class names (from the original training)
 CLASS_NAMES = [
@@ -21,12 +27,13 @@ CLASS_NAMES = [
     'Bacterial Red disease',
     'Fungal diseases Saprolegniasis',
     'Healthy Fish',
+    'Not Fish',
     'Parasitic diseases',
     'Viral diseases White tail disease'
 ]
 
 # Image preprocessing parameters (from the notebook)
-IMAGE_SIZE = 256
+IMAGE_SIZE = 224
 CHANNELS = 3
 
 class PredictionResponse(BaseModel):
@@ -60,17 +67,18 @@ def preprocess_image(image: Image.Image) -> np.ndarray:
         np.ndarray: Preprocessed image array
     """
     # Resize image
+    img = image.convert('RGB')
     img = image.resize((IMAGE_SIZE, IMAGE_SIZE))
     
     # Convert to numpy array
-    img_array = np.array(img)
+    img_array = tf.keras.preprocessing.image.img_to_array(img)
     
     # Ensure the image has 3 channels
     if img_array.shape[-1] != CHANNELS:
         raise HTTPException(status_code=400, detail="Image must have 3 color channels")
     
     # Expand dimensions to create a batch
-    img_array = np.expand_dims(img_array, axis=0)
+    img_array = tf.expand_dims(img_array, 0)
     
     return img_array
 

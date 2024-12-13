@@ -1,6 +1,7 @@
 /venv
 .env
 fishease_model.h5
+fishease_model(1).h5
 app(test build).py
 gitignore
 main copy.py
